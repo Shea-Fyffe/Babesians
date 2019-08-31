@@ -1,0 +1,37 @@
+---
+title: .center[.large[PSYC 892 Bayesian Statistics]]
+subtitle: .emphasize2[.center[Project 1]]
+author: .center[.emphasize[Shea Fyffe]]
+institute: .center[.font80[George Mason University<br>Amazon]]
+date: .center[.font60[`r format(as.Date("2019-08-26"), '%d %B, %Y')`<br>(Updated:`r  format(Sys.time(), '%d %B, %Y')`)]]
+output:
+  xaringan::moon_reader:
+    css: ["default","default-fonts", "metropolis", "metropolis-fonts"]
+    seal: TRUE
+    yolo: FALSE
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+# The Problem
+
+---
+
+# The Solution
+
+.center[![justin_biebs](https://thumbs.gfycat.com/ChillyHastyGemsbok-size_restricted.gif)
+]
+
+---
+
+# The Results
+
+---
+
+# Lessons Learned
+--
+.center[
+![baby_grossed_out](https://memeguy.com/photos/images/could-you-fking-not-119253.gif)
+]

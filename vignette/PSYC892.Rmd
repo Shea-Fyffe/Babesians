@@ -1,0 +1,61 @@
+---
+title: 'PSYC 892: Bayesian Statistics'
+subtitle: "Project 1"
+author: "Shea Fyffe"
+date: "8/26/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Example 1
+*Calculate the probability of drawing a full house after four hands (i.e., four players) have been dealt 7 cards.* This particular example uses discrete measurement theory, which means that we will leverage combinations from a *set* of playing cards.
+There are 3 conditions in which a full house can be drawn:
+
+1. **Condition 1:** drawing a single full house (3-of-a-kind + 1 pair) and two random unique cards:
+
+   - Probability of drawing a first single card *1,2,3,4,5...J, Q, K*   $\binom{13}{1}$
+
+   - Probability of drawing 3 of the 4 of the single card   $\binom{4}{3}$
+
+   - Probability of drawing a second single card *1,2,3,4,5...J, Q, K*   $\binom{12}{1}$
+
+   - Probability of drawing 2 of the 4 of the single card   $\binom{4}{2}$
+
+   - Probability of drawing 2 unique cards of the 11 cards left of *1,2,3,4,5...J, Q, K*   $\binom{11}{2}$
+
+   - Probability of drawing 1 of the 4 of each of the uniqe cards *1,2,3,4,5...J, Q, K*   $\binom{4}{1}$   $\binom{4}{1}$
+
+   - Combination of drawing 7 cards from 52 cards $\binom{52}{7}$
+
+2. **Condition 2:** drawing a single full house (3-of-a-kind + 1 pair) and another unique pair:
+
+   - Probability of drawing a first single card *1,2,3,4,5...J, Q, K*   $\binom{13}{1}$
+
+   - Probability of drawing 3 of the 4 of the single card   $\binom{4}{3}$
+
+   - Probability of drawing two other unique cards *1,2,3,4,5...J, Q, K*   $\binom{12}{2}$
+
+   - Probability of drawing 2 of the 4 of each of the two cards   $\binom{4}{2}$   $\binom{4}{2}$
+
+   - Combination of drawing 7 cards from 52 cards $\binom{52}{7}$
+
+3. **Condition 3:** drawing a two 3-of-a-kind and another random unique card:
+
+   - Probability of drawing two unique cards *1,2,3,4,5...J, Q, K*   $\binom{13}{2}$
+
+   - Probability of drawing 3 of the 4 of each of the two cards   $\binom{4}{3}$   $\binom{4}{3}$
+
+   - Probability of drawing 1 other unique cards *1,2,3,4,5...J, Q, K*   $\binom{11}{1}$
+
+   - Probability of drawing 1 of the 4 of each of the unique card   $\binom{4}{1}$
+
+   - Combination of drawing 7 cards from 52 cards   $\binom{52}{7}$
+   
+### Summary
+\[
+P(full house | 7_{cardhand}) = \frac{\binom{13}{1}\binom{4}{3}\binom{12}{1}\binom{4}{2}\binom{11}{2}\binom{4}{1}\binom{4}{1} + \binom{13}{1}\binom{4}{3}\binom{12}{2}\binom{4}{2}\binom{4}{2} + \binom{13}{2}\binom{4}{3}\binom{11}{1}\binom{4}{1}}
+{\binom{52}{7}}
+\]
