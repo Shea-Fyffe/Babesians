@@ -71,4 +71,17 @@ BirthdayMatch<-function(i) {
 }
 BirthdayMatch(40)
 
-#### Example 4: 
+#### Example 4: Chances all 4 Washington teams win Championship
+
+DCchamp<-function(i) {
+  League<-1/i
+  return(League)
+}
+
+NBA<-DCchamp(30)
+MLB<-DCchamp(30)
+NHL<-DCchamp(31)
+NFL<-DCchamp(32)
+
+DC4champs<-NBA*MLB*NHL*NFL
+DC4champs
