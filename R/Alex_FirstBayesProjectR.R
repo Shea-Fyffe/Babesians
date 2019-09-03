@@ -85,3 +85,5 @@ NFL<-DCchamp(32)
 
 DC4champs<-NBA*MLB*NHL*NFL
 DC4champs
+
+
