@@ -1,0 +1,27 @@
+---
+title: 'Bayesian Statistics: Conditional Probability'
+author: "Shea Fyffe"
+date: "9/4/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Conditional Probability
+
+*Conditional Probability* is the probability of *event A* given *event B*. This is generally written as $$P(A | B)$$
+
+###Types of Events
+**Independent events**: When events do not affect the probability of eachother. For example rolling die, one die does not affect the outcome of the other. Events are independent if the occurrence of one event does not influence (and is not influenced by) the occurrence of the other(s). For example: when tossing two coins, the result of one flip does not affect the result of the other.
+
+**Mutually exclusive**: Events are mutually exclusive if the occurrence of one event excludes the occurrence of the other(s). Mutually exclusive events cannot happen at the same time. For example: when tossing a coin, the result can either be heads or tails but cannot be both.
+
+This of course means mutually exclusive events are not independent, and independent events cannot be mutually exclusive. (Events of measure zero excepted.)
+
+The probability of rolling a 6 AND another 6: $${P(A\cap B) = P(A) * P(B)}\\P(6\cap6) = \frac{1}{6} * \frac{1}{6}\\P(6\cap6) = 2.777\%$$
+
+The probability of rolling a 6 after rolling the dice twice: $${P(A\cup B) = P(A) + P(B)}\\P(6\cup6) = \frac{1}{6} + \frac{1}{6}\\P(6\cup6) = 33.3333\%$$
+
+*Gambler's Fallacy* when events are independent you beleive they are dependent. For example, rolling a dice and assuming because you rolled an even number 10 times in a row the likelihood of an odd roll increases.

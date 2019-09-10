@@ -44,3 +44,29 @@ full_house <- function(hand_size) {
    })
    return(sum(.res))
 }
+#' @title Get Posterior Probabilities Based on Bayes Rule
+#'
+#' @param hand_size
+#'
+#' @return
+#' @export
+#'
+#' @examples
+bayes_rule <- function(h, d, H1 = TRUE,
+                       revise_cell, revise_value) {
+   if (length(h) == 2L) {
+      dh <- c(d, 1 - d)
+   }
+   if (length(revise_cell) != 2L) {
+      stop("revise_cell should specify row and column number")
+   }
+   ct <- h * matrix(dh, ncol = 2)
+   if (H1) {
+      pos <- ct[,1] / sum(ct[,1])
+   } else {
+      pos <- ct[,2] / sum(ct[,2])
+   }
+   ct <- cbind(h,d,ct,pos)
+   colnames(ct) <- c("Prior", "Likelihood", "BNH1", "BNH0", "POS")
+   return(ct)
+}
