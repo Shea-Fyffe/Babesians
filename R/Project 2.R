@@ -18,44 +18,38 @@ con1 <- table(train.dat$education, train.dat$promotion)
 con2 <- table(test.dat$education, test.dat$promotion)
 con3 <- table(filter.dat$education, filter.dat$promotion)
 
-# Probability Table
-con1 <- cbind(con1, rowSums(con1))
-con1 <- rbind(con1, colSums(con1))
-colnames(con1)[3] = 'Education'
-rownames(con1)[3] = 'Promotion'
+# Function Edit Contingency Table
+ftable <- function(con){
+  con <- cbind(con, rowSums(con))
+  con <- rbind(con, colSums(con))
+  colnames(con)[3] = 'Education'
+  rownames(con)[3] = 'Promotion'
+  
+  con
+}
+
+# Edit Cons and display new
+con1 <- ftable(con1)
+con2 <- ftable(con2)
+con3 <- ftable(con3)
 
 print(con1)
-
-
-con2 <- cbind(con2, rowSums(con2))
-con2 <- rbind(con2, colSums(con2))
-colnames(con2)[3] = 'Education'
-rownames(con2)[3] = 'Promotion'
-
 print(con2)
-
-
-con3 <- cbind(con3, rowSums(con3))
-con3 <- rbind(con3, colSums(con3))
-colnames(con3)[3] = 'Education'
-rownames(con3)[3] = 'Promotion'
-
 print(con3)
 
 # Bayes function for frequency counts
-bayes <- function(prior_h1, prior_h2, con) {
-  lh <- (con[2, 2]/con[3, 2]) / (((con[2, 2]/con[3, 2]) * prior_h1) + ((con[2, 1]/con[3, 1]) * prior_h2))
+bayes <- function(prior_h1, con) {
+  lh <- (con[2, 2]/con[3, 2]) / (((con[2, 2]/con[3, 2]) * prior_h1) + ((con[2, 1]/con[3, 1]) * (1 - prior_h1)))
   lh * prior_h1
 }
 
 
 # Initial prior probability from training data
 prior_promotion <- con1[3, 2] / con1[3, 3]
-prior_nopromotion <- con1[3, 1] / con1[3, 3]
+print(prior_promotion)
 
 # Update based on testing data
-bayes(prior_promotion, prior_nopromotion, con2)
-
+bayes(prior_promotion, con2)
 # Update based on filtered sales data
-bayes(prior_promotion, prior_nopromotion, con3)
+bayes(prior_promotion, con3)
 
