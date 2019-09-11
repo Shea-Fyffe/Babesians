@@ -3,6 +3,24 @@ degree holders. What is the probability that a randomly selected master’s+ deg
 
 
 
+> print(con1)
+                     0     1 Education
+Bachelor's       23670 12999     36669
+Master's & above  9550  5375     14925
+Promotion        33220 18374     51594
+> print(con2)
+                     0    1 Education
+Bachelor's        9965 5613     15578
+Master's & above  4131 2373      6504
+Promotion        14096 7986     22082
+> print(con3)
+                    0    1 Education
+Bachelor's       3483 1335      4818
+Master's & above 1290  544      1834
+Promotion        4773 1879      6652
+
+
+
 P(P|M) = [P(M|P)/P(M)] * P(P)
 
 P(P) = 18374/51594 = 0.356 from the training data. This is our prior probability of getting promoted in a typical organization. 
