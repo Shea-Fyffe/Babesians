@@ -44,8 +44,8 @@ bayes <- function(prior_h1, con) {
 }
 
 # Initial prior probability from training data
-prior_promotion <- con1[3, 2] / con1[3, 3]
-print(prior_promotion)
+prior_masters <- con1[2, 3] / con1[3, 3]
+print(prior_masters)
 
 # Update based on testing data
 bayes(prior_promotion, con2)
