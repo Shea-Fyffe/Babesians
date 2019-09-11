@@ -1,11 +1,13 @@
 ###Bayesian Project 2
 prior<-read.csv("train.csv")
 prior$promotion<-prior$KPIs_met..80.
-evidence<-read.csv("test.csv")
-evidence$promotion<-evidence$KPIs_met..80.
-evidence<-subset(evidence, department=="Sales & Marketing")
+##Test Data as Evidence
+evidence1<-read.csv("test.csv")
+evidence1$promotion<-evidence1$KPIs_met..80.
+##Referree-dominated evidence
+evidence2<-subset(evidence1, recruitment_channel=="referred")
 
-##Prior Data set
+###Prior Data set
 #Contingency Table
 priorcon<-table(prior$education, prior$promotion)
 priorcon<-priorcon/sum(priorcon)
@@ -18,22 +20,44 @@ priormat
 prior_all<-priormat[3,2]
 #Conditional, given Master's and Above
 prior_grad<-priormat[2,2]/priormat[2,3]
+prior_grad
 
-##Evidence Data Set
+#Descriptives of prior_grad
+#mean=.
+
+###Evidence Data Sets
+
+##Education - Master's & above
+
 #Contingency Table
-evicon<-table(evidence$education, evidence$promotion)
-evicon<-evicon/sum(evicon)
-evicon
+evicon1<-table(evidence1$education, evidence1$promotion)
+evicon1<-evicon1/sum(evicon1)
+evicon1
 
 #Probability Matrix
-evimat<-fmatrix(evicon)
-evimat
+evimat1<-fmatrix(evicon1)
+evimat1
 
 #chance of anyone getting promotion
-evi_all<-evimat[3,2]
+evi_all<-evimat1[3,2]
 
 #Conditional, given Master's and Above
-evi_grad<-evimat[2,2]/evimat[2,3]
+evi_grad<-evimat1[2,2]/evimat1[2,3]
+
+##Department - Sales & Marketing
+
+#Contingency Table
+evicon2<-table(evidence2$education, evidence2$promotion)
+evicon2<-evicon2/sum(evicon2)
+evicon2
+
+#Probability Matrix
+evimat2<-fmatrix(evicon2)
+evimat2
+
+#Conditional, given Sales & Marketing Dept.
+evi_sm<-evimat2[3,2]
+evi_sm
 
 ###Posteriors (Updating Priors)
 ##For Anyone
@@ -42,24 +66,10 @@ bayes(prior_all, evimat)
 ##For Master's and Above
 bayes(prior_grad, evimat)
 
+
+### Distribution of 
+
 ################End of Working code, on to functions and sources##################
-
-##Function to Create Matrix
-fmatrix<-function(con){
-  con<-cbind(con, rowSums(con))
-  con<-rbind(con, colSums(con))
-  colnames(con)[3]='Education'
-  rownames(con)[3]='Promotion'
-  
-  con
-}
-
-##Bayes function for frequency counts
-bayes <- function(prior_h1, con) {
-  lh <- (con[2, 2]/con[3, 2]) / (((con[2, 2]/con[3, 2]) * prior_h1) 
-                                 + ((con[2, 1]/con[3, 1]) * (1 - prior_h1)))
-  lh * prior_h1
-}
 
 # Initial prior probability from training data
 prior_promotion <- priormat[3, 2] / priormat[3, 3]
