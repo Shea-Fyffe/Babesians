@@ -1,0 +1,16 @@
+An organization typically promotes around 35.6% of their employees. Our organization of interest is made up of bachelor’s and master’s+ 
+degree holders. What is the probability that a randomly selected master’s+ degree holder was promoted in the organization of interest? 
+
+
+
+P(P|M) = [P(M|P)/P(M)] * P(P)
+
+P(P) = 18374/51594 = 0.356 from the training data. This is our prior probability of getting promoted in a typical organization. 
+P(M) = 6504/22082 = 0.2945 from the testing data, or our organization of interest. 
+P(M|P) = P(M and P)/P(P) = (2373/22082)/0.356 = 0.30186
+
+P(P|M) = (0.30186/0.2945) * 0.356 = 0.364
+
+
+
+There is a 36.4% probability that a randomly selected master’s+ degree holder in the organization has been promoted. 
