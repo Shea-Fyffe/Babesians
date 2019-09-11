@@ -38,14 +38,14 @@ print(con2)
 print(con3)
 
 # Bayes function for frequency counts
-bayes <- function(prior_h1, con) {
-  lh <- (con[2, 2]/con[3, 2]) / (((con[2, 2]/con[2, 3]) * prior_h1) + ((con[1, 2]/con[1, 3]) * (1 - prior_h1)))
-  lh * prior_h1
+bayes <- function(prior_eventB, con) {
+  lh <- (con[2, 2]/con[3, 2]) / (((con[2, 2]/con[3, 2]) * prior_eventB) + ((con[2, 1]/con[3, 1]) * (1 - prior_eventB)))
+  lh * prior_eventB
 }
 
 # Initial prior probability from training data
-prior_masters <- con1[2, 3] / con1[3, 3]
-print(prior_masters)
+prior_promotion <- con1[3, 2] / con1[3, 3]
+print(prior_promotion)
 
 # Update based on testing data
 bayes(prior_promotion, con2)
