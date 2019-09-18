@@ -2,7 +2,7 @@
 
 library("ggsci")
 
-normal_bayes <- function(data_mean, data_sd, prior_mean, prior_sd){
+bayes_normal <- function(data_mean, data_sd, prior_mean, prior_sd){
   # Calculate posterior parameters
   n = length(data_mean)
   post_mean = ((prior_mean/prior_sd^2) + ((n * data_mean)/data_sd^2))/((1/prior_sd^2) + (n/data_sd^2))
@@ -34,4 +34,4 @@ normal_bayes <- function(data_mean, data_sd, prior_mean, prior_sd){
   
 }
 
-normal_bayes(110, 20, 100, 15)
+bayes_normal(110, 20, 100, 15)
