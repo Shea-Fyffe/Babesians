@@ -29,7 +29,7 @@ bayes_normal <- function(data_mean, data_sd, prior_mean, prior_sd){
   lines(y, y_post, type = "l", col = "darkorchid1", lwd = 2)
   
   legend("topright", col = c("skyblue", "darkorange", "darkorchid1"),lty = c(2, 1, 1), 
-         cex = 1.5, lwd = 2, bty = "n",
+         cex = 1, lwd = 2, bty = "n",
          legend = c("Prior", "Likelihood", "Posterior"))
   
 }
