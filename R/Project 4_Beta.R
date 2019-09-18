@@ -4,7 +4,7 @@
 # Default uniform distribution.
 # k = number of observed successes in the data, n = total trials
 
-Bayes_Beta <- function(PS = 1, PF = 1, k = 0, n = 0){
+bayes_beta <- function(PS = 1, PF = 1, k = 0, n = 0){
   
   # Generate prior, likelihood, and posterior distributions
   x = seq(.001, .999, .001) 
@@ -33,4 +33,4 @@ Bayes_Beta <- function(PS = 1, PF = 1, k = 0, n = 0){
   
 }
 
-Bayes_Beta(0.5, 05, 30, 100)
+bayes_beta(0.5, 05, 30, 100)
