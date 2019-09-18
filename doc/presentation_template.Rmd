@@ -1,9 +1,9 @@
 ---
 title: .center[.large[PSYC 892 Bayesian Statistics]]
-subtitle: .emphasize2[.center[Project 1]]
+subtitle: .emphasize2[.center[Project 3]]
 author: .center[.emphasize[Shea Fyffe]]
 institute: .center[.font80[George Mason University<br>Amazon]]
-date: .center[.font60[`r format(as.Date("2019-08-26"), '%d %B, %Y')`<br>(Updated:`r  format(Sys.time(), '%d %B, %Y')`)]]
+date: .center[.font60[`r format(as.Date("2019-09-18"), '%d %B, %Y')`<br>(Updated:`r  format(Sys.time(), '%d %B, %Y')`)]]
 output:
   xaringan::moon_reader:
     css: ["default","default-fonts", "metropolis", "metropolis-fonts"]
@@ -16,29 +16,57 @@ output:
       countIncrementalSlides: false
 ---
 # The Problem
+.center[![reddit](https://logos-download.com/wp-content/uploads/2016/06/Reddit_logo_full_1-700x227.png)]
 
+**Goal:** Update knowledge of average post karma given new data
+
+
+Assumptions:
+$$X \sim \mathcal{N}(\theta,\,\sigma^{2})\,$$
+$$\mu_{1} \sim \mathcal{N}(\mu_{\theta},\,\sigma^{2}_{\theta})\,$$
+
+$$f(\mu|X) \propto f(X|\mu)f(\mu)$$
 ---
-
 # The Solution
 
-$$
-P(full house) = \frac{\binom{13}{1}\binom{4}{3}\binom{12}{1}\binom{4}{2}\binom{11}{2}\binom{4}{1}\binom{4}{1} + \binom{13}{1}\binom{4}{3}\binom{12}{2}\binom{4}{2}\binom{4}{2} + \binom{13}{2}\binom{4}{3}\binom{11}{1}\binom{4}{1}}
-{\binom{52}{7}}
-$$
+$$X \sim \mathcal{N}(84,\,25)\,$$
+$$\mu_{1} \sim \mathcal{N}(19,\,8)\,$$
 
-.center[![justin_biebs](https://thumbs.gfycat.com/ChillyHastyGemsbok-size_restricted.gif)
-]
+```{r code, echo=TRUE, eval=FALSE}
+plot_bayes_norm <- function() {
+   ...
+   n <- 1L
+      # calculate posterior mean
+      post_mu <-
+         ((prior_mu / prior_sigma ^ 2) + ((n * data_mu) / data_sigma ^ 2)) /
+         ((1 / prior_sigma ^ 2) + (n / data_sigma ^ 2))
+      # calculate posterior variance
+      post_sigma <-
+         sqrt(1 / ((1 / prior_sigma ^ 2) + (n / data_sigma ^ 2)))
+      # to center plot on posterior
+      y <- seq(post_mu - 8 * post_sigma,
+               post_mu + 8 * post_sigma,
+               length.out = 500)
+      # create normal density distribution based on prior params
+      y_prior <- dnorm(y, prior_mu, prior_sigma)
+      ...
+}      
+```
 
 ---
 
 # The Results
+```{r source, echo=FALSE}
+source('C:/Users/17404/Desktop/Babesians/R/bayesian_functions.R')
 ```
-sum(5 + 3)
+.center[
+```{r plot, echo=TRUE}
+plot_bayes_norm(data_mu = 84, data_sigma = 25, prior_mu = 19, prior_sigma = 8)
 ```
+]
 ---
 
 # Lessons Learned
---
-.center[
-![baby_grossed_out](https://memeguy.com/photos/images/could-you-fking-not-119253.gif)
-]
+
+- Statistical Notation can be $$P(confusing) \approx 1$$
+- Unclear Assumptions $$n_{x}$$

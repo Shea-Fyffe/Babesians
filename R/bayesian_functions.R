@@ -74,3 +74,87 @@ bayes_rule <- function(h, d, H1 = TRUE) {
    colnames(ct) <- c("Prior", "Likelihood", "BNH1", "BNH0", "POS")
    return(ct)
 }
+#' @title Plot Density given Normal Known Parameters.
+#'
+#'
+#' @return
+#' @export
+#'
+#' @examples
+plot_bayes_norm <-
+   function(data_mu,
+            data_sigma,
+            prior_mu,
+            prior_sigma,
+            seed = 42) {
+      if (data_sigma <= 0L || prior_sigma <= 0L) {
+         stop("invalid variance parameters")
+      }
+      if (!all(sapply(c(
+         data_mu, data_sigma, prior_mu, prior_sigma
+      ), is.numeric))) {
+         stop("all arguments must be passed as numeric vectors")
+      }
+      n <- 1L
+      post_mu <-
+         ((prior_mu / prior_sigma ^ 2) + ((n * data_mu) / data_sigma ^ 2)) /
+         ((1 / prior_sigma ^ 2) + (n / data_sigma ^ 2))
+
+      post_sigma <-
+         sqrt(1 / ((1 / prior_sigma ^ 2) + (n / data_sigma ^ 2)))
+
+      set.seed(seed)
+
+      y <- seq(post_mu - 8 * post_sigma,
+               post_mu + 8 * post_sigma,
+               length.out = 500)  # to center plot on posterior
+
+      .dists <- list()
+
+      .dists$y_prior <- dnorm(y, prior_mu, prior_sigma)
+      .dists$y_lik  <- dnorm(y, data_mu,  data_sigma)
+      .dists$y_post  <- dnorm(y, post_mu,  post_sigma)
+
+
+      .tags <- c("Prior", "Likelihood", "Posterior", "Data")
+      y_max <- max(unlist(.dists))
+
+      pal <- viridisLite::viridis(length(.dists))
+      plot(
+         y,
+         .dists[[1L]],
+         type = "l",
+         col = pal[1],
+         lty = 2,
+         xlim = c(min(y), max(y)),
+         ylim = c(0, y_max),
+         ylab = "density",
+         xlab = "Average Reddit Karma",
+         lwd = 2
+      )
+      for (i in seq_along(.dists[-1])) {
+         lines(y,
+               .dists[[i + 1]],
+               type = "l",
+               col = pal[i + 1],
+               lwd = 2)
+      }
+
+      abline(
+         v = data_mu,
+         col = pal[2L],
+         lty = 3,
+         lwd = 2
+      )
+
+      legend(
+         "topright",
+         col = c(pal, pal[2]),
+         lty = c(2, 1, 1, 3),
+         cex = 1.5,
+         lwd = 2,
+         bty = "n",
+         legend = .tags
+
+      )
+   }
