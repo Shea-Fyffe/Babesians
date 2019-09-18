@@ -3,6 +3,7 @@
 library("ggsci")
 
 bayes_normal <- function(data_mean, data_sd, prior_mean, prior_sd){
+  
   # Calculate posterior parameters
   n = length(data_mean)
   post_mean = ((prior_mean/prior_sd^2) + ((n * data_mean)/data_sd^2))/((1/prior_sd^2) + (n/data_sd^2))
@@ -21,16 +22,17 @@ bayes_normal <- function(data_mean, data_sd, prior_mean, prior_sd){
   
   pal = rev(pal_lancet("lanonc")(3))
   
+  Title = "Prior-to-Posterior Transformation with Normal Data"
+  
   plot(y, y_prior, type = "l", col = pal[1],lty = 2, 
        xlim = c(min(y), max(y)), ylim = c(0, y_max),
-       ylab = "density", lwd = 2)
+       ylab = "density", main=Title, lwd = 2)
   lines(y, y_lik,  type = "l", col = pal[2], lwd = 2)
   lines(y, y_post, type = "l", col = pal[3], lwd = 2)
-  abline(v = data_mean, col = pal[2], lty = 3, lwd = 2)
   
-  legend("topright", col = c(pal, pal[2]),lty = c(2, 1, 1, 3), 
+  legend("topright", col = c(pal, pal[2]),lty = c(2, 1, 1), 
          cex = 1.5, lwd = 2, bty = "n",
-         legend = c("Prior", "Likelihood", "Posterior", "Data"))
+         legend = c("Prior", "Likelihood", "Posterior"))
   
 }
 
