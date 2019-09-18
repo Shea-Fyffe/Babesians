@@ -20,17 +20,15 @@ bayes_normal <- function(data_mean, data_sd, prior_mean, prior_sd){
   
   y_max = max(c(y_prior, y_lik, y_post))
   
-  pal = rev(pal_lancet("lanonc")(3))
-  
   Title = "Prior-to-Posterior Transformation with Normal Data"
   
-  plot(y, y_prior, type = "l", col = pal[1],lty = 2, 
+  plot(y, y_prior, type = "l", col = "skyblue",lty = 2, 
        xlim = c(min(y), max(y)), ylim = c(0, y_max),
        ylab = "density", main=Title, lwd = 2)
-  lines(y, y_lik,  type = "l", col = pal[2], lwd = 2)
-  lines(y, y_post, type = "l", col = pal[3], lwd = 2)
+  lines(y, y_lik,  type = "l", col = "darkorange", lwd = 2)
+  lines(y, y_post, type = "l", col = "darkorchid1", lwd = 2)
   
-  legend("topright", col = c(pal, pal[2]),lty = c(2, 1, 1), 
+  legend("topright", col = c("skyblue", "darkorange", "darkorchid1"),lty = c(2, 1, 1), 
          cex = 1.5, lwd = 2, bty = "n",
          legend = c("Prior", "Likelihood", "Posterior"))
   
