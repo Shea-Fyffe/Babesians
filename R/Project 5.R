@@ -1,4 +1,7 @@
 # Project 5                                                                                                  
+
+library(dplyr)
+
 # Import Steph Curry Data
 prosteph = read.csv(file ="file:///C:/Users/gxesp/Documents/R/bayesian statistics/prosteph.csv", header = T)
 usteph = read.csv(file ="file:///C:/Users/gxesp/Documents/R/bayesian statistics/collegesteph.csv", header = T)
@@ -64,7 +67,7 @@ for(i in 1:10){
 lines(y, prior, col= "dark blue", lwd =2)
 
 # Add more info
-title("Steph Curry's Performance Throughout His Career")
+title("Steph Curry's Predicted Performance Level")
 legend("topright", col = c("dark blue", "red"),lty = c(1, 1), 
        cex = 1, lwd = 1, bty = "n",
        legend = c("End of College", "Current Pro"))
