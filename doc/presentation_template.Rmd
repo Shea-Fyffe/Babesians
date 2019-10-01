@@ -1,8 +1,8 @@
 ---
 title: .center[.large[PSYC 892 Bayesian Statistics]]
 subtitle: .emphasize2[.center[Project 3]]
-author: .center[.emphasize[Shea Fyffe]]
-institute: .center[.font80[George Mason University<br>Amazon]]
+author: .center[.emphasize[Team 2]]
+institute: .center[.font80[George Mason University]]
 date: .center[.font60[`r format(as.Date("2019-09-18"), '%d %B, %Y')`<br>(Updated:`r  format(Sys.time(), '%d %B, %Y')`)]]
 output:
   xaringan::moon_reader:
@@ -57,7 +57,7 @@ plot_bayes_norm <- function() {
 
 # The Results
 ```{r source, echo=FALSE}
-source('C:/Users/17404/Desktop/Babesians/R/bayesian_functions.R')
+source('../R/bayesian_functions.R')
 ```
 .center[
 ```{r plot, echo=TRUE}
@@ -65,8 +65,11 @@ plot_bayes_norm(data_mu = 84, data_sigma = 25, prior_mu = 19, prior_sigma = 8)
 ```
 ]
 ---
-
+<img src="https://seeklogo.com/images/G/github-logo-7880D80B8D-seeklogo.com.png" style="width:20px; height:20px;position:absolute;top:356.5px;right:650px;" />
 # Lessons Learned
 
 - Statistical Notation can be $$P(confusing) \approx 1$$
 - Unclear Assumptions $$n_{x}$$
+- Follow our struggles:
+
+.center[https://github.com/Shea-Fyffe/Babesians]
