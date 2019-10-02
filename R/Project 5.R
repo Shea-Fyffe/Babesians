@@ -52,13 +52,13 @@ for (num in 1:10){
 plot(y, type="n", ylim=c(0,max(Mpos)), xlim=c(0, max(y)), ylab="Density")
 colors = heat.colors(10)
 for(i in 1:10){
-  t <- Mpos[, i]
+  t = Mpos[, i]
   lines(y, t, col=colors[11-i])
   
 }
 
 # Add prior line in blue
-lines(y, prior, col= "dark blue", lwd =2)
+lines(y, prior, col = "dark blue", lwd = 2)
 
 # Add more info
 title("Steph Curry's Predicted Performance Level")
@@ -90,26 +90,26 @@ p
 
 
 # Credibility Interval
-# function for ploting densities
-plotting=function(data, ... ,title ) {
+# Function for ploting densities
+plotting = function(data, ... ,title ) {
   library(ggplot2)
   ggplot(data, ...)+
-    geom_bar(stat="identity", alpha=0.5)+
-    theme_minimal()+
-    theme(axis.text.y = element_blank())+
-    ylab("Probability density")+
-    ggtitle(title)+
-    labs(fill='95% confidence interval')
+    geom_bar(stat = "identity", alpha=0.5) +
+    theme_minimal() +
+    theme(axis.text.y = element_blank()) +
+    ylab("Probability density") +
+    ggtitle(title) +
+    labs(fill ='95% confidence interval')
 }
 
 # Compute posterior HDI for latest season
-posterior_df$posterior_cumsum=cumsum(posterior_df$V10)
-posterior_df$posterior_CI=ifelse(posterior_df$posterior_cumsum<0.025|posterior_df$posterior_cumsum>0.975, "outside CI", "inside CI")
-plotting(data=posterior_df, aes(y_df$y, posterior_df$V10, fill=posterior_CI), title="Posterior CI")
+posterior_df$posterior_cumsum = cumsum(posterior_df$V10)
+posterior_df$posterior_CI = ifelse(posterior_df$posterior_cumsum < 0.025 | posterior_df$posterior_cumsum > 0.975, "outside CI", "inside CI")
+plotting(data = posterior_df, aes(y_df$y, posterior_df$V10, fill = posterior_CI), title ="Posterior CI")
 
 # Compute prior HDI
-prior_df$prior_cumsum=cumsum(prior_df$V0)
-prior_df$prior_CI=ifelse(prior_df$prior_cumsum<0.025|prior_df$prior_cumsum>0.975, "outside CI", "inside CI")
-plotting(data=prior_df, aes(y_df$y, prior_df$V0, fill=prior_CI), title="Prior CI")
+prior_df$prior_cumsum = cumsum(prior_df$V0)
+prior_df$prior_CI = ifelse(prior_df$prior_cumsum < 0.025 | prior_df$prior_cumsum > 0.975, "outside CI", "inside CI")
+plotting(data = prior_df, aes(y_df$y, prior_df$V0, fill = prior_CI), title = "Prior CI")
 
 
