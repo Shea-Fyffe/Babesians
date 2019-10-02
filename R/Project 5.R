@@ -1,6 +1,6 @@
 # Project 5                                                                                                  
 
-library(dplyr)
+library(tidyr)
 
 # Import Steph Curry Data
 prosteph = read.csv(file ="file:///C:/Users/gxesp/Documents/R/bayesian statistics/prosteph.csv", header = T)
@@ -87,3 +87,29 @@ dfBeta= dfBeta[dfBeta$Density > 0.001, ]
 p = ggplot(dfBeta, aes(y, Density, color = Seasons)) + geom_line() + 
   labs(title = "Steph Curry's Predicted Performance Level")
 p
+
+
+# Credibility Interval
+# function for ploting densities
+plotting=function(data, ... ,title ) {
+  library(ggplot2)
+  ggplot(data, ...)+
+    geom_bar(stat="identity", alpha=0.5)+
+    theme_minimal()+
+    theme(axis.text.y = element_blank())+
+    ylab("Probability density")+
+    ggtitle(title)+
+    labs(fill='95% confidence interval')
+}
+
+# Compute posterior HDI for latest season
+posterior_df$posterior_cumsum=cumsum(posterior_df$V10)
+posterior_df$posterior_CI=ifelse(posterior_df$posterior_cumsum<0.025|posterior_df$posterior_cumsum>0.975, "outside CI", "inside CI")
+plotting(data=posterior_df, aes(y_df$y, posterior_df$V10, fill=posterior_CI), title="Posterior CI")
+
+# Compute prior HDI
+prior_df$prior_cumsum=cumsum(prior_df$V0)
+prior_df$prior_CI=ifelse(prior_df$prior_cumsum<0.025|prior_df$prior_cumsum>0.975, "outside CI", "inside CI")
+plotting(data=prior_df, aes(y_df$y, prior_df$V0, fill=prior_CI), title="Prior CI")
+
+
