@@ -56,7 +56,8 @@ for(i in 1:10){
   lines(y, t, col=colors[11-i])
   
 }
-# add prior line in blue
+
+# Add prior line in blue
 lines(y, prior, col= "dark blue", lwd =2)
 
 # Add more info
@@ -68,16 +69,21 @@ legend("topright", col = c("dark blue", "red"),lty = c(1, 1),
 
 
 # Convert matrices to dataframes
+prior_df = as_data_frame(prior)
+names(prior_df) = "V0"
+y_df = as_data_frame(y)
+names(y_df) = "y"
 likelihood_df = as_data_frame(Ml)
 posterior_df = as_data_frame(Mpos)
 
 
-dfBeta = cbind(y, posterior_df)
-names(dfBeta)[-1] <- as.character(2009:2018)
+dfBeta = cbind(y, prior, posterior_df)
+names(dfBeta)[-c(1, 2)] <- as.character(2009:2018)
 dfBeta = gather(dfBeta, Seasons, Density, -y)
 dfBeta= dfBeta[dfBeta$Density > 0.001, ]
 
 
 #ggplot
-p = ggplot(dfBeta, aes(y, Density, color = Seasons)) + geom_line() + labs(title = "Steph Curry's Predicted Performance Level")
+p = ggplot(dfBeta, aes(y, Density, color = Seasons)) + geom_line() + 
+  labs(title = "Steph Curry's Predicted Performance Level")
 p
