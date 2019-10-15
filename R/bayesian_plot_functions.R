@@ -1,82 +1,9 @@
-#' @title Combination Function
-#'
-#' @param n Numeric. Size of set.
-#' @param k Numeric. Size to select.
-#'
-#' @return
-#' @export
-#'
-#' @examples
-combination <- function(n, k) {
-   .res <- factorial(n) / (factorial(k) * factorial(n - k))
-   return(.res)
-}
-#' @title Permutation Function
-#'
-#' @inheritParams combination
-#'
-#' @return
-#' @export
-#'
-#' @examples
-permutation <- function(n, k) {
-   .res <- factorial(n) / factorial(n - k)
-   return(.res)
-}
-#' @title Get the Probability of a Full House
-#'
-#' @param hand_size
-#'
-#' @return
-#' @export
-#'
-#' @examples
-full_house <- function(hand_size) {
-   #2 triples 1 random card
-   .a <-
-      combination(13, 2) * combination(4, 3) * combination(4, 3) * combination(11, 1) * combination(4, 1)
-   #1 triple 1 pair 2 random cards
-   .b <-
-      combination(13, 1) * combination(12, 1) * combination(4, 2) * combination(4, 3) * combination(11, 2) * combination(4, 1)  * combination(4, 1)
-   #1 triple 2 unique pair
-   .c <-
-      combination(13, 1) * combination(12, 2) * combination(4, 3) * combination(4, 2) * combination(4, 2)
-   .res <- c(.a, .b, .c)
-   .res <- sapply(.res, function(x) {
-      x <- x / combination(52, hand_size)
-   })
-   return(sum(.res))
-}
-#' @title Get Posterior Probabilities Based on Bayes Rule
-#'
-#' @param h Numeric. vector of length 2 P(H)
-#' @param d Numeric. vector of length 2 P(D|H)
-#' @param H1 Logical. Assume the Null Hypothesis is False?
-#'
-#' @return
-#' @export
-#'
-#' @examples
-bayes_rule <- function(h, d, H1 = TRUE) {
-   if (length(h) == 2L) {
-      dh <- c(d, 1 - d)
-   }
-   if (length(revise_cell) != 2L) {
-      stop("revise_cell should specify row and column number")
-   }
-   ct <- h * matrix(dh, ncol = 2)
-   if (H1) {
-      pos <- ct[, 1] / sum(ct[, 1])
-   } else {
-      pos <- ct[, 2] / sum(ct[, 2])
-   }
-   ct <- cbind(h, d, ct, pos)
-   colnames(ct) <- c("Prior", "Likelihood", "BNH1", "BNH0", "POS")
-   return(ct)
-}
 #' @title Plot Density given Normal Known Parameters.
 #'
-#'
+#' @param data_mu Numeric, mean of observed data.
+#' @param data_sigma Numeric, variance of observed data.
+#' @param prior_mu Numeric, mean of prior distribution.
+#' @param prior_sigma Numeric, variance of prior distibution.
 #' @return
 #' @export
 #'
@@ -158,3 +85,36 @@ plot_bayes_norm <-
 
       )
    }
+#' @title Plot Animated Density given Normal Known Parameters.
+#'
+#' @param x Data.frame, to be ploted.
+#' @param aes Aesthetics defined by [ggplot2::aes]
+#' @return
+#' @export
+#'
+#' @examples
+plot_bayes_animate <- function(x, aes = c("y", "density", "type")) {
+   #lacks abstraction
+   #ci <- aggregate(cbind(ci_high, ci_low) ~ year, data = x, function(x) mean(x))
+   x <- x[x[,aes[3]] != 1,]
+   x[,aes[3]] <- as.factor(x[,aes[3]])
+   p <- ggplot2::ggplot(x, ggplot2::aes_string(x = aes[1], y = aes[2], fill = aes[3]))
+   p <- p + ggplot2::geom_area()
+   p <- p + ggplot2::geom_vline(data = ci,
+                                ggplot2::aes(color = year, xintercept = ci_low), size = .25) +
+      ggplot2::geom_vline(data = ci, ggplot2::aes(color = year, xintercept = ci_high), size = .25) +
+      ggplot2::guides(color = FALSE)
+   p <- p + ggplot2::scale_fill_viridis_d(name = "Distribution",
+                                          labels = c("Posterior", "Prior")) +
+      ggplot2::theme_bw()
+   p <- p + ggplot2::theme(panel.grid.major = ggplot2::element_blank(),
+                           panel.grid.minor = ggplot2::element_blank(),
+                           text = ggplot2::element_text(size = 20))
+   p <- p + ggplot2::xlim(c(.25,.75))
+   p <- p + ggplot2::ylab(aes[2])
+
+   p <- p + gganimate::transition_time(year) + ggplot2::labs(title = "Year: {frame_time}",
+                                                             subtitle = "S.Curry 3 Point Performance") +
+      gganimate::view_follow(fixed_y = TRUE)
+   return(p)
+}
