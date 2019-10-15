@@ -1,0 +1,56 @@
+---
+title: .center[.large[PSYC 892 Bayesian Statistics]]
+subtitle: .emphasize2[.center[Project 6]]
+author: .center[.emphasize[Team 2]]
+institute: .center[.font80[George Mason University]]
+date: .center[.font60[`r format(Sys.Date(), '%d %B, %Y')`<br>(Updated:`r  format(Sys.time(), '%d %B, %Y')`)]]
+output:
+  xaringan::moon_reader:
+    css: ["default","default-fonts", "metropolis", "metropolis-fonts"]
+    seal: TRUE
+    yolo: FALSE
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+# The Problem
+.center[![catan](https://cdn.onebauer.media/one/empire-images/articles/59de8e5261027bcd0dc62981/settlers-of-catan-game.jpg?quality=50&width=1800&ratio=16-9&resizeStyle=aspectfill&format=jpg)]
+
+**Goal:** Compare and contrast a frequentist versus a subjectivist when activating the Robber in Settlers of Catan
+
+---
+# The Solution
+Frequentist:
+``` {r, eval = TRUE, echo = TRUE}
+activate_the_robber <- function(n_dice = 2L, n_rolls = 1000L, seed = 46){
+ #set seed for replication
+  set.seed(seed)
+  #roll n_dice n_rolls times
+  .out <- replicate(n_rolls, sample(1:6, n_dice, replace = T))
+  #sum n_dice
+  .out <- apply(.out, 2, sum)
+  #print robber probability (rolling a 7)
+  print(length(.out[.out == 7L])/ length(.out))
+  
+  return(invisible(.out))
+}
+
+activate_the_robber(n_rolls = 100L)
+activate_the_robber(n_rolls = 10000L)
+```
+---
+
+# The Results
+Bayes' theorem
+$$ P(A \mid B) = \frac{P(B \mid A) \, P(A)}{P(B)} $$
+
+$$f(\mu|X) \propto f(X|\mu)f(\mu)$$
+---
+# The Solution
+
+---
+
+# The Results
+

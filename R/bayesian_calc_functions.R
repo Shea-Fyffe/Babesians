@@ -61,9 +61,6 @@ bayes_rule <- function(h, d, H1 = TRUE) {
    if (length(h) == 2L) {
       dh <- c(d, 1 - d)
    }
-   if (length(revise_cell) != 2L) {
-      stop("revise_cell should specify row and column number")
-   }
    ct <- h * matrix(dh, ncol = 2)
    if (H1) {
       pos <- ct[, 1] / sum(ct[, 1])
@@ -73,5 +70,23 @@ bayes_rule <- function(h, d, H1 = TRUE) {
    ct <- cbind(h, d, ct, pos)
    colnames(ct) <- c("Prior", "Likelihood", "BNH1", "BNH0", "POS")
    return(ct)
+}
+#' @title Roll some Catan dice
+roll_catan_dice <- function(n_dice = 2L, n_rolls = 1000L, seed = 46,
+                            plot = FALSE, ...){
+   stopifnot({
+      is.numeric(n_dice) && is.numeric(n_rolls) && is.numeric(seed)
+   })
+ set.seed(seed)
+   .out <- replicate(n_rolls, sample(1:6, n_dice, replace = T))
+   .out <- apply(.out, 2, sum)
+   if (plot) {
+      h <- hist(.out, breaks = 100, plot = FALSE)
+      h$counts <- h$counts / sum(h$counts)
+      plot(h, ylab = "Probability", xlab = "Sum of Roll",
+           main = sprintf("Odds of rolling sum for %s dice", n_dice),
+           ...)
+   }
+   return(.out)
 }
 
